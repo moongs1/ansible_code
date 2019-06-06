@@ -15,7 +15,7 @@
     version: "{{ app_version }}"
     force: yes
 
-- name: Redmine. Change permissions
+- name: Dokuwiki. Change permissions
   file:
     path: "{{ app_home }}"
     owner: www-data
