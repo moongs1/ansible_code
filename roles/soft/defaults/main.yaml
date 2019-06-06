@@ -1,0 +1,13 @@
+---
+apt_packages:
+  - git
+  - apache2
+  - php
+
+app_repo_name: "https://github.com/moongs1/dokuwiki.git"
+
+app_home: /opt/wiki
+
+app_version: 1.0
+
+app_fqdn: wiki.local

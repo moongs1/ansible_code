@@ -1,0 +1,33 @@
+---
+- name: APT. Update cache
+  apt: 
+    update_cache: yes
+
+- name: APT. Install packages
+  apt:
+    name: "{{ apt_packages }}"
+    state: latest
+
+- name: DokuWiki. Clone repo
+  git:
+    repo: "{{ app_repo_name }}"
+    dest: "{{ app_home }}"
+    version: "{{ app_version }}"
+    force: yes
+
+- name: Redmine. Change permissions
+  file:
+    path: "{{ app_home }}"
+    owner: www-data
+    group: www-data
+    recurse: yes
+
+- name: Configuration files for virtualhost
+  template: 
+    src: wiki.site.conf.j2 
+    dest: "/etc/apache2/sites-enabled/wiki.site.conf"
+  notify:
+    - apache_restart
+
+- name: "Add {{ app_fqdn }} to host file"
+  shell: echo "127.0.0.1       {{ app_fqdn }}" >> /etc/hosts
